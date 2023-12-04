@@ -1,0 +1,14 @@
+torch>=2.0.0
+decord
+easydict
+einops
+gradio>=4.5.0
+numpy
+pandas>=2.0.3
+peft>=0.4.0
+Pillow
+tqdm
+transformers>=4.31.0
+git+https://github.com/openai/CLIP.git
+sentencepiece
+protobuf
