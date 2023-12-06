@@ -24,3 +24,5 @@ pip install -r requirements.txt
 ```shell
 python -m vtimellm.inference --model_base <path to the Vicuna v1.5 weights> 
 ```
+
+Alternatively, you can also choose to conduct multi-turn conversations in [Jupyter Notebook](inference.ipynb). Similarly, you need to set 'args.model_base' to the path of Vicuna v1.5.
