@@ -81,7 +81,7 @@ A Comprehensive Evaluation of VTimeLLM's Performance across Multiple Tasks.
 
 ---
 
-### Creative Tasks:paintbrush:
+### Creative Tasks :paintbrush:
 ![1](images/ex1.png) 
 
 ---
@@ -109,12 +109,12 @@ We are grateful for the following awesome projects our VTimeLLM arising from:
 
 If you're using VTimeLLM in your research or applications, please cite using this BibTeX:
 ```bibtex
-    @article{huang2023vtimellm,
-      title={VTimeLLM: Empower LLM to Grasp Video Moments}, 
-      author={Bin Huang, Xin Wang, Hong Chen, Zihan Song and Wenwu Zhu},
-      year={2023},
-      journal={ArXiv 2311.18445}
-	}
+@article{huang2023vtimellm,
+  title={VTimeLLM: Empower LLM to Grasp Video Moments}, 
+  author={Bin Huang, Xin Wang, Hong Chen, Zihan Song and Wenwu Zhu},
+  year={2023},
+  journal={ArXiv 2311.18445}
+}
 ```
 
 ## License :scroll:
