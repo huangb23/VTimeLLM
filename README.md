@@ -20,6 +20,8 @@ Official PyTorch implementation of the paper "VTimeLLM: Empower LLM to Grasp Vid
 ---
 
 ## :loudspeaker: Latest Updates
+- **Dec-14**: Released the training code and data. All the resources including models, datasets and extracted features are available 
+[here](https://cloud.tsinghua.edu.cn/d/6db5d02883124826aa6f/?p=%2F&mode=list). :fire::fire:
 - **Dec-4**: VTimeLLM: demo released.
 
 ---
@@ -69,7 +71,9 @@ pip install flash-attn --no-build-isolation
 
 To run the demo offline, please refer to the instructions in [offline_demo.md](docs/offline_demo.md).
 
+## Training :train:
 
+For training instructions, check out [train.md](docs/train.md).
 
 ## Qualitative Analysis :mag:
 

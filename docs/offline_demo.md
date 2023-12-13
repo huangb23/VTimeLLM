@@ -16,7 +16,7 @@ pip install -r requirements.txt
 
 ### Download weights
 
-* Download all files from the [Tsinghua Cloud](https://cloud.tsinghua.edu.cn/d/6db5d02883124826aa6f/) and place them into the 'checkpoints' directory.
+* Download all files from the [Tsinghua Cloud](https://cloud.tsinghua.edu.cn/d/6db5d02883124826aa6f/?p=%2Fcheckpoints&mode=list) and place them into the 'checkpoints' directory.
 * Download [Vicuna v1.5](https://huggingface.co/lmsys/vicuna-7b-v1.5) weights
 
 ### Run the Demo

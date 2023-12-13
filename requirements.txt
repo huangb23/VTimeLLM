@@ -1,8 +1,8 @@
-torch>=2.0.0
+torch
 decord
 easydict
 einops
-gradio>=4.5.0
+gradio
 numpy
 pandas>=2.0.3
 peft>=0.4.0

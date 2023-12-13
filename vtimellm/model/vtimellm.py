@@ -5,7 +5,7 @@ import torch.nn as nn
 from torch.nn import CrossEntropyLoss
 from transformers import AutoConfig, AutoModelForCausalLM, LlamaConfig, LlamaModel, LlamaForCausalLM
 from transformers.modeling_outputs import CausalLMOutputWithPast
-from vtimellm.constants import IMAGE_TOKEN_INDEX
+from vtimellm.constants import IMAGE_TOKEN_INDEX, IGNORE_INDEX
 
 class VTimeLLMConfig(LlamaConfig):
     model_type = "VTimeLLM"
