@@ -1,4 +1,4 @@
-Our dataset can be download from [here](https://cloud.tsinghua.edu.cn/d/6db5d02883124826aa6f/?p=%2Fdata&mode=list). The data is organized in the following JSON format:
+Our dataset can be downloaded from [here](https://cloud.tsinghua.edu.cn/d/6db5d02883124826aa6f/?p=%2Fdata&mode=list). The data is organized in the following JSON format:
 
 * source: The original sources of the dataset. This field is ['internvid'](https://huggingface.co/datasets/OpenGVLab/InternVid) in stage 2 and ['anet'](http://activity-net.org/download.html) or ['didemo'](https://drive.google.com/drive/u/0/folders/1_oyJ5rQiZboipbMl6tkhY8v0s9zDkvJc) in stage 3.
 * id: The ID of the video in the original dataset.
@@ -45,10 +45,10 @@ Due to Internvid's data being sourced from YouTube, the 'id' field  provides the
 
 If we sample $N=100$ frames as input, then `<s0>` should be replaced by $\frac{0}{54.2} * N = 00$,  `<e0>` should be replaced by $\frac{9.4}{54.2} * N = 17$. and `<s1>` and `<e1>` should be replaced in a similar manner. Finally, in this example, the question from 'human' remains unchanged,  while the 'answer' from 'gpt' is shown as below:
 
-```json
+```
 From 00 to 17, woman is counting money with a pen on a white table. From 91 to 98, two people shaking hands in front of a desk.
 ```
 
 
 
-In the Stage 3 data, approximately 20k data originate from from [VideoChatGPT](https://github.com/mbzuai-oryx/Video-ChatGPT). This subset of  data does not contain special tokens and the 'meta' field.
+In the Stage 3 data, approximately 20k data originate from [VideoChatGPT](https://github.com/mbzuai-oryx/Video-ChatGPT). This subset of  data does not contain special tokens and the 'meta' field.
