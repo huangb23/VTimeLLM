@@ -1,1 +1,1 @@
-from .vtimellm import VTimeLLMLlamaForCausalLM
+from .vtimellm_llama import VTimeLLMLlamaForCausalLM
