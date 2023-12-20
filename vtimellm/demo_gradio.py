@@ -32,7 +32,7 @@ import clip
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--gpu_id", type=int, default=0, help="specify the gpu to load the model.")
-    parser.add_argument("--model_base", type=str, required=True)
+    parser.add_argument("--model_base", type=str, required=True, help="Path to your vicuna-7b-v1.5 huggingface checkpoint")
     parser.add_argument("--clip_path", type=str, default=os.path.join(root_dir, "checkpoints/clip/ViT-L-14.pt"))
     parser.add_argument("--pretrain_mm_mlp_adapter", type=str, default=os.path.join(root_dir, "checkpoints/vtimellm-vicuna-v1-5-7b-stage1/mm_projector.bin"))
     parser.add_argument("--stage2", type=str, default=os.path.join(root_dir, "checkpoints/vtimellm-vicuna-v1-5-7b-stage2"))
