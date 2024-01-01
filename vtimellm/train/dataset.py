@@ -79,6 +79,51 @@ def _add_speaker_and_signal(header, source, get_conversation=True):
     return conversation
 
 
+def preprocess_glm(
+    sources,
+    tokenizer: transformers.PreTrainedTokenizer
+) -> Dict:
+    
+    input_ids = []
+    targets = []
+
+    for source in sources:
+        tokens, loss_masks = [tokenizer.get_command("[gMASK]"), tokenizer.get_command("sop")], [0, 0]
+        def _update(_tokens: List[int], value: int = 1):
+            value = int(value)
+            tokens.extend(_tokens)
+            loss_masks.extend([value] * len(_tokens))
+        
+        for conv in source:
+            if conv["from"] == 'human':
+                role_token = tokenizer.get_command("<|user|>")
+                loss = False
+            else:
+                role_token = tokenizer.get_command("<|assistant|>")
+                loss = True
+                
+            token_id = [role_token] + tokenizer_image_token(conv['value'], tokenizer)[2:]
+            _update(token_id, loss)
+        _update([tokenizer.eos_token_id], False)
+
+        loss_masks = [False] + loss_masks[:-1]
+        labels = [(t if m else IGNORE_INDEX) for t, m in zip(tokens, loss_masks)]
+
+        input_ids.append(tokens)
+        targets.append(labels)
+
+        # print("Sanity Check >>>>>>>>>>>>>")
+        # for t, m in zip(tokens, labels):
+        #     decoded =  tokenizer.tokenizer.index_special_tokens[t] \
+        #         if t in tokenizer.tokenizer.index_special_tokens \
+        #         else tokenizer.decode([t])
+        #     print("%20s: %6d -> %6d" % (repr(decoded), t, m))
+        # print("<<<<<<<<<<<<< Sanity Check")
+
+    return dict(
+        input_ids=torch.tensor(input_ids),
+        labels=torch.tensor(targets),
+    )
 
 def preprocess_llama_2(
     sources,
@@ -365,10 +410,13 @@ class LazySupervisedDataset(Dataset):
             print(e)
             return random.choice(self)
 
-        data_dict = preprocess(
-            [source["conversations"]],
-            self.tokenizer,
-            has_image=True)
+        if getattr(self.tokenizer, 'name', None) == 'GLMTokenizer':
+            data_dict = preprocess_glm([source["conversations"]], self.tokenizer)
+        else:
+            data_dict = preprocess(
+                [source["conversations"]],
+                self.tokenizer,
+                has_image=True)
         if isinstance(i, int):
             data_dict = dict(input_ids=data_dict["input_ids"][0],
                              labels=data_dict["labels"][0])

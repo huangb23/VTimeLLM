@@ -15,6 +15,7 @@
 #    limitations under the License.
 
 import os
+root_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..")
 from dataclasses import dataclass, field
 import logging
 import pathlib
@@ -22,11 +23,12 @@ from typing import Dict, Optional, Sequence, List
 
 import torch
 import transformers
-
+import sys
+sys.path.append(root_dir)
 from vtimellm import conversation as conversation_lib
 from vtimellm.train.vtimellm_trainer import VTimeLLMTrainer
 from vtimellm.train.dataset import make_supervised_data_module, DataArguments
-from vtimellm.model import VTimeLLMLlamaForCausalLM
+from vtimellm.model import VTimeLLMLlamaForCausalLM, VTimeLLMChatGLMForCausalLM
 from vtimellm.model.builder import load_lora
 from vtimellm.mm_utils import print_trainable_parameters
 
@@ -238,12 +240,16 @@ def train():
             )
         ))
 
-
-    model = VTimeLLMLlamaForCausalLM.from_pretrained(
-        model_args.model_name_or_path,
-        cache_dir=training_args.cache_dir,
-        **bnb_model_from_pretrained_args
-    )
+    if 'chatglm' in model_args.model_name_or_path:
+        model = VTimeLLMChatGLMForCausalLM.from_pretrained(
+            model_args.model_name_or_path, empty_init=False, device='cuda'
+        )
+    else:
+        model = VTimeLLMLlamaForCausalLM.from_pretrained(
+            model_args.model_name_or_path,
+            cache_dir=training_args.cache_dir,
+            **bnb_model_from_pretrained_args
+        )
     model.config.use_cache = False
 
     if training_args.bits in [4, 8]:
@@ -291,17 +297,22 @@ def train():
             model = get_peft_model(model, lora_config)
         # print_trainable_parameters(model)
 
+    if 'chatglm' in model_args.model_name_or_path:
+        tokenizer = transformers.AutoTokenizer.from_pretrained(
+            model_args.model_name_or_path,
+            trust_remote_code=True
+        )
+    else:
+        tokenizer = transformers.AutoTokenizer.from_pretrained(
+            model_args.model_name_or_path,
+            cache_dir=training_args.cache_dir,
+            model_max_length=training_args.model_max_length,
+            padding_side="right",
+            use_fast=False,
+        )
+        tokenizer.pad_token = tokenizer.unk_token
 
-    tokenizer = transformers.AutoTokenizer.from_pretrained(
-        model_args.model_name_or_path,
-        cache_dir=training_args.cache_dir,
-        model_max_length=training_args.model_max_length,
-        padding_side="right",
-        use_fast=False,
-    )
-
-
-    tokenizer.pad_token = tokenizer.unk_token
+    
     if model_args.version in conversation_lib.conv_templates:
         conversation_lib.default_conversation = conversation_lib.conv_templates[model_args.version]
     else:

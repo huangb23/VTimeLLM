@@ -1,49 +1,49 @@
 import torch
 import torch.nn as nn
 from typing import List, Optional, Tuple, Union
-from transformers import AutoConfig, AutoModelForCausalLM, LlamaConfig, LlamaModel, LlamaForCausalLM
-from transformers.modeling_outputs import CausalLMOutputWithPast
+from transformers import AutoConfig, AutoModelForCausalLM
+from .chatglm import ChatGLMConfig, ChatGLMModel, ChatGLMForConditionalGeneration
 from .vtimellm_arch import VTimeLLMMetaModel, VTimeLLMMetaForCausalLM
 
-class VTimeLLMConfig(LlamaConfig):
-    model_type = "VTimeLLM"
+class VTimeLLMChatGLMConfig(ChatGLMConfig):
+    model_type = "VTimeLLM_ChatGLM"
 
-class VTimeLLMLlamaModel(LlamaModel, VTimeLLMMetaModel):
-    config_class = VTimeLLMConfig
+class VTimeLLMChatGLMModel(ChatGLMModel, VTimeLLMMetaModel):
+    config_class = VTimeLLMChatGLMConfig
 
-    def __init__(self, config: LlamaConfig):
-        super(VTimeLLMLlamaModel, self).__init__(config)
+    def __init__(self, config, empty_init=True, device=None):
+        super(VTimeLLMChatGLMModel, self).__init__(config, empty_init=empty_init, device=device)
 
-class VTimeLLMLlamaForCausalLM(LlamaForCausalLM, VTimeLLMMetaForCausalLM):
-    config_class = VTimeLLMConfig
+class VTimeLLMChatGLMForCausalLM(ChatGLMForConditionalGeneration, VTimeLLMMetaForCausalLM):
+    config_class = VTimeLLMChatGLMConfig
 
-    def __init__(self, config):
-        super(LlamaForCausalLM, self).__init__(config)
-        self.model = VTimeLLMLlamaModel(config)
-        self.pretraining_tp = config.pretraining_tp
-        self.vocab_size = config.vocab_size
-        self.lm_head = nn.Linear(config.hidden_size, config.vocab_size, bias=False)
-
+    def __init__(self, config, empty_init=True, device=None):
+        super(ChatGLMForConditionalGeneration, self).__init__(config)
+        self.transformer = VTimeLLMChatGLMModel(config, empty_init=empty_init, device=device)
+        self.max_sequence_length = config.max_length
+        self.config = config
+        self.quantized = False
         # Initialize weights and apply final processing
         self.post_init()
 
     def get_model(self):
-        return self.model
+        return self.transformer
 
     def forward(
         self,
         input_ids: torch.LongTensor = None,
-        attention_mask: Optional[torch.Tensor] = None,
         position_ids: Optional[torch.LongTensor] = None,
+        attention_mask: Optional[torch.Tensor] = None,
         past_key_values: Optional[List[torch.FloatTensor]] = None,
         inputs_embeds: Optional[torch.FloatTensor] = None,
         labels: Optional[torch.LongTensor] = None,
         use_cache: Optional[bool] = None,
         output_attentions: Optional[bool] = None,
         output_hidden_states: Optional[bool] = None,
-        images: Optional[torch.FloatTensor] = None,
         return_dict: Optional[bool] = None,
-    ) -> Union[Tuple, CausalLMOutputWithPast]:
+        return_last_logit: Optional[bool] = False,
+        images: Optional[torch.FloatTensor] = None,
+    ):
 
         if inputs_embeds is None:
             (
@@ -84,5 +84,5 @@ class VTimeLLMLlamaForCausalLM(LlamaForCausalLM, VTimeLLMMetaForCausalLM):
             _inputs['images'] = images
         return _inputs
 
-AutoConfig.register("VTimeLLM", VTimeLLMConfig)
-AutoModelForCausalLM.register(VTimeLLMConfig, VTimeLLMLlamaForCausalLM)
+AutoConfig.register("VTimeLLM_ChatGLM", VTimeLLMChatGLMConfig)
+AutoModelForCausalLM.register(VTimeLLMChatGLMConfig, VTimeLLMChatGLMForCausalLM)

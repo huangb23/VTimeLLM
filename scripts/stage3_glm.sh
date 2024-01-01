@@ -1,17 +1,17 @@
 #!/bin/bash
 
-MODEL_VERSION=vicuna-v1-5-7b
+MODEL_VERSION=chatglm3-6b
 gpu_vis=0 # per_device_train_batch_size * gradient_accumulation_steps * n_gpus = 128
 MASTER_PORT=29570
 
 
-deepspeed --include localhost:$gpu_vis --master_port $MASTER_PORT vtimellm/train/train_mem.py \
+deepspeed --include localhost:$gpu_vis --master_port $MASTER_PORT vtimellm/train/train.py \
     --deepspeed ./scripts/zero2.json \
     --lora_enable True \
     --training_stage 3 \
-    --model_name_or_path ./checkpoints/vicuna-7b-v1.5 \
-    --version v1 \
-    --data_path ./data/stage3.json \
+    --model_name_or_path ./checkpoints/$MODEL_VERSION \
+    --version plain \
+    --data_path ./data/stage3_chinese.json \
     --feat_folder /path/to/stage3_feat \
     --pretrain_mm_mlp_adapter ./checkpoints/vtimellm-$MODEL_VERSION-stage1/mm_projector.bin \
     --stage2_path ./checkpoints/vtimellm-$MODEL_VERSION-stage2 \
