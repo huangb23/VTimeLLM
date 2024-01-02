@@ -27,6 +27,8 @@ VTimeLLM adopts a three-stage training strategy. Please follow the instructions 
     - ...
 ```
 
+If you want to train a Chinese version, you can download the [ChatGLM3-6b](https://huggingface.co/THUDM/chatglm3-6b) model and the translated Chinese [dataset](https://cloud.tsinghua.edu.cn/d/6db5d02883124826aa6f/?p=%2Fdata&mode=list).
+
 * Download the pre-extracted features from the [Tsinghua Cloud](https://cloud.tsinghua.edu.cn/d/6db5d02883124826aa6f/?p=%2Ffeat&mode=list).
 
 ```shell

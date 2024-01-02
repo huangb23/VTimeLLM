@@ -20,6 +20,7 @@ Official PyTorch implementation of the paper "VTimeLLM: Empower LLM to Grasp Vid
 ---
 
 ## :loudspeaker: Latest Updates
+- **Jan-2**: Thanks to [Xiao Xia](https://github.com/Rishubi) , [Shengbo Tong](https://github.com/tsb-19) and [Beining Wang](https://github.com/Benson0704), we have refactored the code to now support both the LLAMA and ChatGLM3 architectures. We translated the training data into Chinese and fine-tuned a Chinese version based on the ChatGLM3-6b. 
 - **Dec-14**: Released the training code and data. All the resources including models, datasets and extracted features are available 
 [here](https://cloud.tsinghua.edu.cn/d/6db5d02883124826aa6f/?p=%2F&mode=list). :fire::fire:
 - **Dec-4**: VTimeLLM: demo released.
