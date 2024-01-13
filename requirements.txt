@@ -8,7 +8,9 @@ pandas>=2.0.3
 peft>=0.4.0
 Pillow
 tqdm
-transformers>=4.31.0
+transformers==4.31.0
 git+https://github.com/openai/CLIP.git
 sentencepiece
 protobuf
+wandb
+deepspeed
