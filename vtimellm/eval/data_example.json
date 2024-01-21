@@ -1,0 +1,20 @@
+{
+	"v_bXdq2zI1Ms0": {
+		"duration": 73.1,
+		"timestamps": [
+			[6.94, 69.08],
+			[37.28, 43.49],
+			[43.13, 55.55]
+		],
+		"sentences": ["Three men are standing on a mat.", " The man in front begins to do karate on the mat.", " He gets down on the ground and flips around."]
+	},
+	"v_CN01Gm2Yc4k": {
+		"duration": 17.56,
+		"timestamps": [
+			[0, 5],
+			[5, 12.2],
+			[12.2, 17.56]
+		],
+		"sentences": ["A young lady is gripping a black and silver punching bag between her legs.", "Once she has secured herself on the bag,she begins doing a set of crunches by pulling herself up.", "In between the crunches,she sits up and makes punches out into the air,before going back down."]
+	}
+}
