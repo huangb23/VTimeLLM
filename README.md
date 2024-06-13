@@ -114,11 +114,12 @@ We are grateful for the following awesome projects our VTimeLLM arising from:
 
 If you're using VTimeLLM in your research or applications, please cite using this BibTeX:
 ```bibtex
-@article{huang2023vtimellm,
-  title={VTimeLLM: Empower LLM to Grasp Video Moments},
+@inproceedings{huang2024vtimellm,
+  title={Vtimellm: Empower llm to grasp video moments},
   author={Huang, Bin and Wang, Xin and Chen, Hong and Song, Zihan and Zhu, Wenwu},
-  journal={arXiv preprint arXiv:2311.18445},
-  year={2023}
+  booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition},
+  pages={14271--14280},
+  year={2024}
 }
 ```
 
